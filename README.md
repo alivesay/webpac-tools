@@ -14,7 +14,7 @@ You must specify the Millennium server, either through the `--server` parameter,
 Other environment variables supported:
 * `WEBPAC_PORT` -- sets the web server port for the WebPAC server (default: 443)
 
-### webpac
+### $ webpac
 ```
 $ webpac --help
 
@@ -41,7 +41,7 @@ optional arguments:
   --debug               enable diagnostic output
 ```
 
-### webpac change_pin
+### $ webpac change_pin
 ```
 $ webpac change_pin --help
 
@@ -56,7 +56,7 @@ optional arguments:
   --pin PIN          patron's PIN
 ```
 
-### webpac modify_contact_info
+### $ webpac modify_contact_info
 ```
 $ webpac modify_contact_info --help
 
@@ -77,7 +77,7 @@ optional arguments:
   --pin PIN          patron's PIN
 ```
 
-### webpac get_contact_info
+### $ webpac get_contact_info
 ```
 usage: webpac get_contact_info [-h] --barcode BARCODE --pin PIN
 
@@ -87,7 +87,7 @@ optional arguments:
   --pin PIN          patron's PIN
 ```
 
-### webpac register
+### $ webpac register
 ```
 $ webpac register --help
 
@@ -120,4 +120,48 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+```
+
+WebPACSession.py
+----------------
+
+This module provides the core functionality for interfacing with WebPAC using web scraping techniques (thanks to the awesome BeautifulSoup library).
+
+```
+CLASSES
+    WebPACSession
+
+    class WebPACSession
+     |  Provides access to WebPAC functions, maintaining web
+     |  sessions where required.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, url, debug=False)
+     |
+     |  change_pin(self, pin, new_pin)
+     |      Changes a patron's PIN.
+     |
+     |  get_contact_info(self)
+     |      Gets the patron's current contact information.
+     |
+     |  login(self, code, pin)
+     |      Logs into a WebPAC session.
+     |
+     |  modify_contact_info(self, address_line_1, address_line_2,
+     |                      telephone, email, location_code)
+     |      Sets patron's contact information.
+     |
+     |  new_session(self)
+     |      Gets a fresh WebPAC session cookie.
+     |
+     |  register(self, first_name, middle_name, last_name, mailing_address,
+     |           mailing_city, mailing_state, mailing_zipcode, street_address,
+     |           street_city, street_state, street_zipcode, telephone_area, 
+     |           telephone_prefix, telephone_linenumber, email, birth_month, 
+     |           birth_day, birth_year)
+     |      Registers a new patron.
+     |
+     |  request(self, resource, params=None)
+     |      Manages web request to WebPAC server.
 ```
