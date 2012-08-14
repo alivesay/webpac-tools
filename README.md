@@ -122,6 +122,16 @@ optional arguments:
   -h, --help            show this help message and exit
 ```
 
+RESTful Web Service: app.py
+---------------------------
+
+This [bottle](http://bottlepy.org)-based module presents a web service interface to `WebPACSession`.
+
+* /change_pin, PUT
+* /modify_contact_info, PUT
+* /register, PUT
+* /contact_info, GET
+
 WebPACSession.py
 ----------------
 
