@@ -125,12 +125,37 @@ optional arguments:
 RESTful Web Service: app.py
 ---------------------------
 
-This [bottle](http://bottlepy.org)-based module presents a web service interface to `WebPACSession`.
+This [bottle](http://bottlepy.org)-based module presents a web service interface to `WebPACSession`.  
 
-* /change_pin, PUT
-* /modify_contact_info, PUT
-* /register, PUT
-* /contact_info, GET
+Edit `app.py` and set `CATALOG_URL` to the URL of your WebPAC server.
+
+* /change_pin, method: PUT, params: none, body:
+
+```
+'{"code":"1234567890000", "pin":"1234"}'
+```
+
+* /modify_contact_info, method: PUT, params: none, body:
+
+```
+'{"code":"1234567890000", "pin":"1234",
+  "address_line_1":"1 Main Street", "address_line_2":"Apt. A",
+  "email":"foo@bar.com, "location_code":"aa", "telephone":"000-867-5309" }'
+```
+
+* /register, method: PUT, params: none, body:
+
+```
+'{"first_name":"John", "middle_name":"A", "last_name":"Smith",
+  "mailing_address":"1 Main Street", "mailing_city":"Washington",
+  "mailing_state":"DC", "mailing_zipcode":"12345",
+  "street_address":"2 Main Street", "street_city":"Washington",
+  "street_state":"DC", "street_zipcode":"12345", "telephone_area":"123",
+  "telephone_prefix":"456", "telephone_linenumber":"7890", "email":"foo@bar.com",
+  "birth_month":"December", "birth_day":"1", "birth_year":"1989"}
+```
+
+* /contact_info, method: GET, params: (code, pin), body: none
 
 WebPACSession.py
 ----------------
