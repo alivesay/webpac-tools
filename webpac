@@ -38,13 +38,13 @@ def  process_args():
   subparsers = base_parser.add_subparsers(help='sub-command help', dest='command')
 
   changepin_parser = subparsers.add_parser('change_pin', help='change patron\'s PIN')
-  changepin_parser.add_argument('--barcode', help='patron\'s barcode', required=True)
-  changepin_parser.add_argument('--pin', help='patron\'s PIN', required=True)
+  changepin_parser.add_argument('BARCODE', help='patron\'s barcode')
+  changepin_parser.add_argument('PIN', help='patron\'s PIN')
   changepin_parser.add_argument('NEW_PIN', type=int, help='new PIN')
 
   modpinfo_parser = subparsers.add_parser('modify_contact_info', help='modify patron\'s contact information')
-  modpinfo_parser.add_argument('--barcode', help='patron\'s barcode', required=True)
-  modpinfo_parser.add_argument('--pin', help='patron\'s PIN', required=True)
+  modpinfo_parser.add_argument('BARCODE', help='patron\'s barcode')
+  modpinfo_parser.add_argument('PIN', help='patron\'s PIN')
   modpinfo_parser.add_argument('ADDRESS_LINE_1', help='address line one')
   modpinfo_parser.add_argument('ADDRESS_LINE_2', help='address line two')
   modpinfo_parser.add_argument('TELEPHONE', help='telephone number')
@@ -72,8 +72,8 @@ def  process_args():
   register_parser.add_argument('BIRTH_YEAR', help='birthdate year')
  
   contact_parser = subparsers.add_parser('get_contact_info', help='get patron\'s current contact information')
-  contact_parser.add_argument('--barcode', help='patron\'s barcode', required=True)
-  contact_parser.add_argument('--pin', help='patron\'s PIN', required=True)
+  contact_parser.add_argument('BARCODE', help='patron\'s barcode')
+  contact_parser.add_argument('PIN', help='patron\'s PIN')
  
   return base_parser.parse_args()
 
@@ -85,11 +85,11 @@ if __name__ == "__main__":
   wpsession = WebPACSession(base_url, debug=args.debug)
 
   if args.command == 'change_pin':
-    wpsession.login(args.barcode, args.pin)
-    wpsession.change_pin(args.pin, arg,new_pin)
+    wpsession.login(args.BARCODE, args.PIN)
+    wpsession.change_pin(args.PIN, arg,new_pin)
 
   elif args.command == 'modify_contact_info':
-    wpsession.login(args.barcode, args.pin)
+    wpsession.login(args.BARCODE, args.PIN)
     wpsession.modify_contact_info(args.ADDRESS_LINE_1,
                                   args.ADDRESS_LINE_2,
                                   args.TELEPHONE,
@@ -104,7 +104,7 @@ if __name__ == "__main__":
                        args.EMAIL, args.BIRTH_MONTH, args.BIRTH_DAY, args.BIRTH_YEAR)
 
   elif args.command == 'get_contact_info':
-    wpsession.login(args.barcode, args.pin)
+    wpsession.login(args.BARCODE, args.PIN)
     ci = wpsession.get_contact_info()
     if ci:
       print '%s\n%s\n%s\n%s\n%s' % (ci.get('addr1a'), ci.get('addr1b'), ci.get('tele1'), ci.get('email'), ci.get('locx00'))
