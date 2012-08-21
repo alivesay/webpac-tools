@@ -45,46 +45,48 @@ optional arguments:
 ```
 $ webpac change_pin --help
 
-usage: webpac change_pin [-h] --barcode BARCODE --pin PIN NEW_PIN
+usage: webpac change_pin [-h] BARCODE PIN NEW_PIN
 
 positional arguments:
-  NEW_PIN            new PIN
+  BARCODE     patron's barcode
+  PIN         patron's PIN
+  NEW_PIN     new PIN
 
 optional arguments:
-  -h, --help         show this help message and exit
-  --barcode BARCODE  patron's barcode
-  --pin PIN          patron's PIN
+  -h, --help  show this help message and exit
 ```
 
 ### $ webpac modify_contact_info
 ```
 $ webpac modify_contact_info --help
 
-usage: webpac modify_contact_info [-h] --barcode BARCODE --pin PIN
-                                  ADDRESS_LINE_1 ADDRESS_LINE_2 TELEPHONE
-                                  EMAIL LOCATION_CODE
+usage: webpac modify_contact_info [-h]
+                                  BARCODE PIN ADDRESS_LINE_1 ADDRESS_LINE_2
+                                  TELEPHONE EMAIL LOCATION_CODE
 
 positional arguments:
-  ADDRESS_LINE_1     address line one
-  ADDRESS_LINE_2     address line two
-  TELEPHONE          telephone number
-  EMAIL              email address
-  LOCATION_CODE      default branch location code
+  BARCODE         patron's barcode
+  PIN             patron's PIN
+  ADDRESS_LINE_1  address line one
+  ADDRESS_LINE_2  address line two
+  TELEPHONE       telephone number
+  EMAIL           email address
+  LOCATION_CODE   default branch location code
 
 optional arguments:
-  -h, --help         show this help message and exit
-  --barcode BARCODE  patron's barcode
-  --pin PIN          patron's PIN
+  -h, --help      show this help message and exit
 ```
 
 ### $ webpac get_contact_info
 ```
-usage: webpac get_contact_info [-h] --barcode BARCODE --pin PIN
+usage: webpac get_contact_info [-h] BARCODE PIN
+
+positional arguments:
+  BARCODE     patron's barcode
+  PIN         patron's PIN
 
 optional arguments:
-  -h, --help         show this help message and exit
-  --barcode BARCODE  patron's barcode
-  --pin PIN          patron's PIN
+  -h, --help  show this help message and exit
 ```
 
 ### $ webpac register
