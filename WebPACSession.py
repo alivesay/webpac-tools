@@ -15,19 +15,26 @@ class WebPACSession:
   """
 
   def __init__(self, url, debug=False):
-    self.debug = debug
-
-    if debug:
-      urllib2.install_opener(urllib2.build_opener(urllib2.HTTPSHandler(debuglevel=1)))
-
     self.url = url
+    self.debug = debug
+    
+    if debug:
+      self.__setup_debug()
+
     self.user_id = None
     self.logged_in = False
     self.cookie = None
     self.new_session()
 
 
-  def request(self, resource, params=None):
+  def __setup_debug(self):
+    if self.url.upper.startswith('HTTPS'):
+      urllib2.install_opener(urllib2.build_opener(urllib2.HTTPSHandler(debuglevel=1)))
+    else:
+      urllib2.install_opener(urllib2.build_opener(urllib2.HTTPHandler(debuglevel=1)))
+
+
+  def __request(self, resource, params=None):
     """ Manages web request to WebPAC server. """
     
     request_url = self.url + resource
@@ -51,7 +58,7 @@ class WebPACSession:
   def new_session(self):
     """ Gets a fresh WebPAC session cookie. """
 
-    response = self.request('/')
+    response = self.__request('/')
     self.cookie = response.headers.get('Set-Cookie')
 
 
@@ -62,7 +69,7 @@ class WebPACSession:
 
     params = { 'code': code, 'pin': pin, 'submit.x': '0', 'submit.y': '0' }
 
-    response = self.request(login_resource, params)
+    response = self.__request(login_resource, params)
     soup = BeautifulSoup(response)
 
     loggedInMessage = soup.find('span', { 'class': 'loggedInMessage'})
@@ -88,7 +95,7 @@ class WebPACSession:
     params = { 'pin': pin, 'pin1': new_pin, 'pin2': new_pin,
                'submit.x' : '0', 'submit.y' : '0'}
    
-    response = self.request(newpin_resource, params)
+    response = self.__request(newpin_resource, params)
     soup = BeautifulSoup(response)
 
     errormessage = soup.find('span', { 'class': 'errormessage' })
@@ -110,7 +117,7 @@ class WebPACSession:
                'email': email, 'locx00': location_code.ljust(5),
                'submit.x': '0', 'submit.y': '0' }
 
-    response = self.request(modpinfo_resource, params)
+    response = self.__request(modpinfo_resource, params)
     soup = BeautifulSoup(response)
 
 
@@ -136,7 +143,7 @@ class WebPACSession:
 
     modpinfo_resources = '/patroninfo/' + self.user_id + '/modpinfo'
 
-    response = self.request(modpinfo_resources)
+    response = self.__request(modpinfo_resources)
     soup = BeautifulSoup(response)
     
     values = ['addr1a', 'addr1b', 'tele1', 'email']
