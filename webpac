@@ -83,10 +83,11 @@ if __name__ == "__main__":
  
   base_url = ['https://','http://'][args.no_ssl] + args.server + ':' + str(args.port)
   wpsession = WebPACSession(base_url, debug=args.debug)
+
   try:
     if args.command == 'change_pin':
       wpsession.login(args.BARCODE, args.PIN)
-      wpsession.change_pin(args.PIN, arg,new_pin)
+      wpsession.change_pin(args.PIN, args.NEW_PIN)
 
     elif args.command == 'modify_contact_info':
       wpsession.login(args.BARCODE, args.PIN)
