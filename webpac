@@ -83,33 +83,38 @@ if __name__ == "__main__":
  
   base_url = ['https://','http://'][args.no_ssl] + args.server + ':' + str(args.port)
   wpsession = WebPACSession(base_url, debug=args.debug)
+  try:
+    if args.command == 'change_pin':
+      wpsession.login(args.BARCODE, args.PIN)
+      wpsession.change_pin(args.PIN, arg,new_pin)
 
-  if args.command == 'change_pin':
-    wpsession.login(args.BARCODE, args.PIN)
-    wpsession.change_pin(args.PIN, arg,new_pin)
+    elif args.command == 'modify_contact_info':
+      wpsession.login(args.BARCODE, args.PIN)
+      wpsession.modify_contact_info(args.ADDRESS_LINE_1,
+                                    args.ADDRESS_LINE_2,
+                                    args.TELEPHONE,
+                                    args.EMAIL,
+                                    args.LOCATION_CODE)
 
-  elif args.command == 'modify_contact_info':
-    wpsession.login(args.BARCODE, args.PIN)
-    wpsession.modify_contact_info(args.ADDRESS_LINE_1,
-                                  args.ADDRESS_LINE_2,
-                                  args.TELEPHONE,
-                                  args.EMAIL,
-                                  args.LOCATION_CODE)
+    elif args.command == 'register':
+      wpsession.register(args.FIRST_NAME, args.MIDDLE_NAME, args.LAST_NAME,
+                         args.MAILING_ADDRESS, args.MAILING_CITY, args.MAILING_STATE, args.MAILING_ZIPCODE,
+                         args.STREET_ADDRESS, args.STREET_CITY, args.STREET_STATE, args.STREET_ZIPCODE,
+                         args.TELEPHONE_AREA, args.TELEPHONE_PREFIX, args.TELEPHONE_LINENUMBER,
+                         args.EMAIL, args.BIRTH_MONTH, args.BIRTH_DAY, args.BIRTH_YEAR)
 
-  elif args.command == 'register':
-    wpsession.register(args.FIRST_NAME, args.MIDDLE_NAME, args.LAST_NAME,
-                       args.MAILING_ADDRESS, args.MAILING_CITY, args.MAILING_STATE, args.MAILING_ZIPCODE,
-                       args.STREET_ADDRESS, args.STREET_CITY, args.STREET_STATE, args.STREET_ZIPCODE,
-                       args.TELEPHONE_AREA, args.TELEPHONE_PREFIX, args.TELEPHONE_LINENUMBER,
-                       args.EMAIL, args.BIRTH_MONTH, args.BIRTH_DAY, args.BIRTH_YEAR)
+    elif args.command == 'get_contact_info':
+      wpsession.login(args.BARCODE, args.PIN)
+      ci = wpsession.get_contact_info()
+      if ci:
+        print '%s\n%s\n%s\n%s\n%s' % (ci.get('addr1a'), ci.get('addr1b'), ci.get('tele1'), ci.get('email'), ci.get('locx00'))
+      else:
+        print 'No contact information available.'
 
-  elif args.command == 'get_contact_info':
-    wpsession.login(args.BARCODE, args.PIN)
-    ci = wpsession.get_contact_info()
-    if ci:
-      print '%s\n%s\n%s\n%s\n%s' % (ci.get('addr1a'), ci.get('addr1b'), ci.get('tele1'), ci.get('email'), ci.get('locx00'))
     else:
-      print 'No contact information available.'
-
-  else:
-    print 'error: unhandled subcommand \'%s\'' % args.command
+      print 'error: unhandled subcommand \'%s\'' % args.command
+  
+  except Exception as e:
+    sys.stderr.write('Error: %s\n' % str(e))
+    sys.exit(1)
+    
