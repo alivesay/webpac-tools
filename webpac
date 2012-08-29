@@ -40,7 +40,7 @@ def  process_args():
   changepin_parser = subparsers.add_parser('change_pin', help='change patron\'s PIN')
   changepin_parser.add_argument('BARCODE', help='patron\'s barcode')
   changepin_parser.add_argument('PIN', help='patron\'s PIN')
-  changepin_parser.add_argument('NEW_PIN', type=int, help='new PIN')
+  changepin_parser.add_argument('NEW_PIN', help='new PIN')
 
   modpinfo_parser = subparsers.add_parser('modify_contact_info', help='modify patron\'s contact information')
   modpinfo_parser.add_argument('BARCODE', help='patron\'s barcode')
