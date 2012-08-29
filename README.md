@@ -134,7 +134,7 @@ Edit `app.py` and set `CATALOG_URL` to the URL of your WebPAC server.
 * /change_pin, method: PUT, params: none, body:
 
 ```
-'{"code":"1234567890000", "pin":"1234"}'
+'{"code":"1234567890000", "pin":"1234", "new_pin":"5678"}'
 ```
 
 * /modify_contact_info, method: PUT, params: none, body:
