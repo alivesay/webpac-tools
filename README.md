@@ -185,11 +185,9 @@ CLASSES
      |  new_session(self)
      |      Gets a fresh WebPAC session cookie.
      |
-     |  register(self, first_name, middle_name, last_name, mailing_address,
-     |           mailing_city, mailing_state, mailing_zipcode, street_address,
-     |           street_city, street_state, street_zipcode, telephone_area, 
-     |           telephone_prefix, telephone_linenumber, email, birth_month, 
-     |           birth_day, birth_year)
+     |  register(self, first_name, middle_name, last_name, mailing_address_line_1,
+     |           mailing_address_line_2, street_address_line_1,
+     |           street_address_line_2, telephone, email, birthdate)
      |      Registers a new patron.
      |
      |  request(self, resource, params=None)
