@@ -94,31 +94,25 @@ optional arguments:
 $ webpac register --help
 
 usage: webpac register [-h]
-                       FIRST_NAME MIDDLE_NAME LAST_NAME MAILING_ADDRESS
-                       MAILING_CITY MAILING_STATE MAILING_ZIPCODE
-                       STREET_ADDRESS STREET_CITY STREET_STATE STREET_ZIPCODE
-                       TELEPHONE_AREA TELEPHONE_PREFIX TELEPHONE_LINENUMBER
-                       EMAIL BIRTH_MONTH BIRTH_DAY BIRTH_YEAR
+                       FIRST_NAME MIDDLE_NAME LAST_NAME MAILING_ADDRESS_LINE_1
+                       MAILING_ADDRESS_LINE_2 STREET_ADDRESS_LINE_1
+                       STREET_ADDRESS_LINE_2 TELEPHONE EMAIL BIRTHDATE
 
 positional arguments:
   FIRST_NAME            first name
   MIDDLE_NAME           middle name
   LAST_NAME             last name
-  MAILING_ADDRESS       mailing address line
-  MAILING_CITY          mailing address city
-  MAILING_STATE         mailing address state
-  MAILING_ZIPCODE       mailing address zipcode
-  STREET_ADDRESS        street address line
-  STREET_CITY           street address city
-  STREET_STATE          street address state
-  STREET_ZIPCODE        street address zipcode
-  TELEPHONE_AREA        telephone area code
-  TELEPHONE_PREFIX      telephone prefix code
-  TELEPHONE_LINENUMBER  telephone line number
+  MAILING_ADDRESS_LINE_1
+                        mailing address line 1
+  MAILING_ADDRESS_LINE_2
+                        mailing address line 2
+  STREET_ADDRESS_LINE_1
+                        street address line 1
+  STREET_ADDRESS_LINE_2
+                        street address line 2
+  TELEPHONE             telephone (XXX-XXX-XXXX)
   EMAIL                 email address
-  BIRTH_MONTH           birthdate month
-  BIRTH_DAY             birthdate day
-  BIRTH_YEAR            birthdate year
+  BIRTHDATE             birthdate (YYYYMMDD)
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -149,12 +143,11 @@ Edit `app.py` and set `CATALOG_URL` to the URL of your WebPAC server.
 
 ```
 '{"first_name":"John", "middle_name":"A", "last_name":"Smith",
-  "mailing_address":"1 Main Street", "mailing_city":"Washington",
-  "mailing_state":"DC", "mailing_zipcode":"12345",
-  "street_address":"2 Main Street", "street_city":"Washington",
-  "street_state":"DC", "street_zipcode":"12345", "telephone_area":"123",
-  "telephone_prefix":"456", "telephone_linenumber":"7890", "email":"foo@bar.com",
-  "birth_month":"December", "birth_day":"1", "birth_year":"1989"}
+  "mailing_address_line_1":"1 Main Street",
+  "mailing_address_line_2":"Washington DC 12345",
+  "street_address_line_1":"2 Main Street",
+  "street_address_line_2":"Washington DC 12345",
+  "telephone":"123-456-7890", "email":"foo@bar.com", "birthdate":"19780814"}
 ```
 
 * /contact_info, method: GET, params: (code, pin), body: none
