@@ -61,7 +61,7 @@ def  process_args():
   register_parser.add_argument('STREET_ADDRESS_LINE_2', help='street address line 2')
   register_parser.add_argument('TELEPHONE', help='telephone (XXX-XXX-XXXX)')
   register_parser.add_argument('EMAIL', help='email address')
-  register_parser.add_argument('BIRTHDATE', help='birthdate (YYYYMMDD)')
+  register_parser.add_argument('BIRTHDATE', help='birthdate (MMDDYYYY)')
  
   contact_parser = subparsers.add_parser('get_contact_info', help='get patron\'s current contact information')
   contact_parser.add_argument('BARCODE', help='patron\'s barcode')
