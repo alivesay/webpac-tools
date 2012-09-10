@@ -112,7 +112,7 @@ positional arguments:
                         street address line 2
   TELEPHONE             telephone (XXX-XXX-XXXX)
   EMAIL                 email address
-  BIRTHDATE             birthdate (YYYYMMDD)
+  BIRTHDATE             birthdate (MMDDYYYY)
 
 optional arguments:
   -h, --help            show this help message and exit
