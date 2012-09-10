@@ -79,7 +79,7 @@ def register():
   
   if not set(('first_name', 'middle_name', 'last_name',
               'mailing_address_line_1', 'mailing_address_line_2', 
-              'street_address_line_1, 'street_address_line_2',
+              'street_address_line_1', 'street_address_line_2',
               'telephone', 'email', 'birthdate')) <= set(entity):
     response.status = 400
     return { 'error': 'missing required keys' }
