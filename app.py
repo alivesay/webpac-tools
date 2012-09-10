@@ -67,6 +67,38 @@ def modify_contact_info():
     return { 'error': str(e) }
 
 
+@route('/register', method='PUT')
+def register():
+  data = request.body.readline()
+ 
+  if not data:
+    response.status = 400
+    return { 'error': 'no data found' }
+ 
+  entity = json.loads(data)
+  
+  if not set(('first_name', 'middle_name', 'last_name',
+              'mailing_address_line_1', 'mailing_address_line_2', 
+              'street_address_line_1, 'street_address_line_2',
+              'telephone', 'email', 'birthdate')) <= set(entity):
+    response.status = 400
+    return { 'error': 'missing required keys' }
+
+  try:
+    wbsession = WebPACSession(CATALOG_URL)
+    wbsession.register(entity['first_name'], entity['middle_name'], entity['last_name'],
+                       entity['mailing_address_line_1'], entity['mailing_address_line_2'],
+                       entity['street_address_line_1'], entity['street_address_line_2'],
+                       entity['telephone'], entity['email'], entity['birthdate'])
+
+  except Exception as e:
+    if str(e) == 'login failed':
+      response.status = 401
+    else:
+      response.status = 400
+    return { 'error': str(e) }
+
+
 @route('/contact_info', method='GET')
 def contact_info():
   code = request.query.get('code')
@@ -88,5 +120,5 @@ def contact_info():
     return { 'error': str(e) }
 
 
-run(host='localhost', port=9000, debug=False)
+run(host='localhost', port=9000, debug=True)
 

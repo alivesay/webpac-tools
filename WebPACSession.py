@@ -122,21 +122,23 @@ class WebPACSession:
 
 
   def register(self, first_name, middle_name, last_name,
-               mailing_address, mailing_city, mailing_state, mailing_zipcode,
-               street_address, street_city, street_state, street_zipcode, 
-               telephone_area, telephone_prefix, telephone_linenumber,
-               email, birth_month, birth_day, birth_year):
+               mailing_address_line_1, mailing_address_line_2,
+               street_address_line_1, street_address_line_2,
+               telephone, email, birthdate):
     """ Registers a new patron. """
-    
+
+    selfreg_resource = '/selfreg'
+
     params = { 'nfirst': first_name, 'nmiddle': middle_name, 'nlast': last_name,
-               'stre_aaddress': mailing_address.upper(), 'city': mailing_city.upper(),
-               'state': mailing_state.upper(), 'zipcode': mailing_zipcode, 'city_aaddress': '',
-               'stre_aaddress2': street_address.upper(), 'city2': street_city.upper(),
-               'state2': street_state.upper(), 'zipcode2': street_zipcode, 'city_aaddress2': '',
-               'Phone_1': telephone_area, 'Phone_2': telephone_prefix, 'Phone_3': telephone_linenumber,
-               'tphone1': '', 'zemailaddr': email,
-               'birthdate1': birth_month, 'birthdate2': birth_day, 'birthdate3': birth_year,
-               'F051birthdate': '' }
+               'stre_aaddress': mailing_address_line_1.upper(), 
+               'city_aaddress': mailing_address_line_2.upper(),
+               'stre_aaddress2': street_address_line_1.upper(),
+               'city_haddress2': street_address_line_2.upper(),
+               'tphone1': telephone, 'zemailaddr': email, 'F051birthdate': birthdate}
+
+    response = self.__request(selfreg_resource, params)
+    soup = BeautifulSoup(response)
+
 
   def get_contact_info(self):
     """ Gets the patron's current contact information. """

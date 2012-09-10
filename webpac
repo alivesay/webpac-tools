@@ -55,21 +55,13 @@ def  process_args():
   register_parser.add_argument('FIRST_NAME', help='first name')
   register_parser.add_argument('MIDDLE_NAME', help='middle name')
   register_parser.add_argument('LAST_NAME', help='last name')
-  register_parser.add_argument('MAILING_ADDRESS', help='mailing address line')
-  register_parser.add_argument('MAILING_CITY', help='mailing address city')
-  register_parser.add_argument('MAILING_STATE', help='mailing address state')
-  register_parser.add_argument('MAILING_ZIPCODE', help='mailing address zipcode')
-  register_parser.add_argument('STREET_ADDRESS', help='street address line')
-  register_parser.add_argument('STREET_CITY', help='street address city')
-  register_parser.add_argument('STREET_STATE', help='street address state')
-  register_parser.add_argument('STREET_ZIPCODE', help='street address zipcode')
-  register_parser.add_argument('TELEPHONE_AREA', help='telephone area code')
-  register_parser.add_argument('TELEPHONE_PREFIX', help='telephone prefix code')
-  register_parser.add_argument('TELEPHONE_LINENUMBER', help='telephone line number')
+  register_parser.add_argument('MAILING_ADDRESS_LINE_1', help='mailing address line 1')
+  register_parser.add_argument('MAILING_ADDRESS_LINE_2', help='mailing address line 2')
+  register_parser.add_argument('STREET_ADDRESS_LINE_1', help='street address line 1')
+  register_parser.add_argument('STREET_ADDRESS_LINE_2', help='street address line 2')
+  register_parser.add_argument('TELEPHONE', help='telephone (XXX-XXX-XXXX)')
   register_parser.add_argument('EMAIL', help='email address')
-  register_parser.add_argument('BIRTH_MONTH', help='birthdate month')
-  register_parser.add_argument('BIRTH_DAY', help='birthdate day')
-  register_parser.add_argument('BIRTH_YEAR', help='birthdate year')
+  register_parser.add_argument('BIRTHDATE', help='birthdate (YYYYMMDD)')
  
   contact_parser = subparsers.add_parser('get_contact_info', help='get patron\'s current contact information')
   contact_parser.add_argument('BARCODE', help='patron\'s barcode')
@@ -99,10 +91,9 @@ if __name__ == "__main__":
 
     elif args.command == 'register':
       wpsession.register(args.FIRST_NAME, args.MIDDLE_NAME, args.LAST_NAME,
-                         args.MAILING_ADDRESS, args.MAILING_CITY, args.MAILING_STATE, args.MAILING_ZIPCODE,
-                         args.STREET_ADDRESS, args.STREET_CITY, args.STREET_STATE, args.STREET_ZIPCODE,
-                         args.TELEPHONE_AREA, args.TELEPHONE_PREFIX, args.TELEPHONE_LINENUMBER,
-                         args.EMAIL, args.BIRTH_MONTH, args.BIRTH_DAY, args.BIRTH_YEAR)
+                         args.MAILING_ADDRESS_LINE_1, args.MAILING_ADDRESS_LINE_2,
+                         args.STREET_ADDRESS_LINE_1, args.STREET_ADDRESS_LINE_2,
+                         args.TELEPHONE, args.EMAIL, args.BIRTHDATE)
 
     elif args.command == 'get_contact_info':
       wpsession.login(args.BARCODE, args.PIN)
