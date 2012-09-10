@@ -112,7 +112,7 @@ positional arguments:
                         street address line 2
   TELEPHONE             telephone (XXX-XXX-XXXX)
   EMAIL                 email address
-  BIRTHDATE             birthdate (YYYYMMDD)
+  BIRTHDATE             birthdate (MMDDYYYY)
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -147,7 +147,7 @@ Edit `app.py` and set `CATALOG_URL` to the URL of your WebPAC server.
   "mailing_address_line_2":"Washington DC 12345",
   "street_address_line_1":"2 Main Street",
   "street_address_line_2":"Washington DC 12345",
-  "telephone":"123-456-7890", "email":"foo@bar.com", "birthdate":"19780814"}
+  "telephone":"123-456-7890", "email":"foo@bar.com", "birthdate":"08141978"}
 ```
 
 * /contact_info, method: GET, params: (code, pin), body: none
