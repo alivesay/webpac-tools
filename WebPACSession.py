@@ -34,7 +34,7 @@ class WebPACSession:
       urllib2.install_opener(urllib2.build_opener(urllib2.HTTPHandler(debuglevel=1)))
 
 
-  def __request(self, resource, params=None):
+  def _request(self, resource, params=None):
     """ Manages web request to WebPAC server. """
     
     request_url = self.url + resource
@@ -58,7 +58,7 @@ class WebPACSession:
   def new_session(self):
     """ Gets a fresh WebPAC session cookie. """
 
-    response = self.__request('/')
+    response = self._request('/')
     self.cookie = response.headers.get('Set-Cookie')
 
 
@@ -69,7 +69,7 @@ class WebPACSession:
 
     params = { 'code': code, 'pin': pin, 'submit.x': '0', 'submit.y': '0' }
 
-    response = self.__request(login_resource, params)
+    response = self._request(login_resource, params)
     soup = BeautifulSoup(response)
 
     loggedInMessage = soup.find('span', { 'class': 'loggedInMessage'})
@@ -95,7 +95,7 @@ class WebPACSession:
     params = { 'pin': pin, 'pin1': new_pin, 'pin2': new_pin,
                'submit.x' : '0', 'submit.y' : '0'}
    
-    response = self.__request(newpin_resource, params)
+    response = self._request(newpin_resource, params)
     soup = BeautifulSoup(response)
 
     errormessage = soup.find('span', { 'class': 'errormessage' })
@@ -117,8 +117,13 @@ class WebPACSession:
                'email': email, 'locx00': location_code.ljust(5),
                'submit.x': '0', 'submit.y': '0' }
 
-    response = self.__request(modpinfo_resource, params)
+    response = self._request(modpinfo_resource, params)
     soup = BeautifulSoup(response)
+
+    errormessage = soup.find('span', { 'class': 'errormessage' })
+
+    if errormessage:
+      raise Exception(errormessage.text)
 
 
   def register(self, first_name, middle_name, last_name,
@@ -136,16 +141,51 @@ class WebPACSession:
                'city_haddress2': street_address_line_2.upper(),
                'tphone1': telephone, 'zemailaddr': email, 'F051birthdate': birthdate}
 
-    response = self.__request(selfreg_resource, params)
+    response = self._request(selfreg_resource, params)
     soup = BeautifulSoup(response)
+
+    errormessage = soup.find('span', { 'class': 'errormessage' })
+
+    if errormessage:
+      raise Exception(errormessage.text)
+
+  
+  def acquire(self, author, title, publisher, isbn, type, subject):
+    """ Submits a purchase suggestion. """
+
+    if not self.logged_in:
+      raise Exception('not logged in')
+
+    valid_types = [ 'BOOK', 'AUDIOBOOK', 'EBOOK', 'LARGE PRINT',
+                    'MUSIC', 'DVD', 'PERIODICAL', 'ZINE', 'DATABASE' ]
+    
+    if not type.upper() in valid_types:
+      type = 'other'
+
+    acquire_resource = '/acquire'
+
+    params = { 'author': author[:45], 'title': title[:45], 'publisher': publisher[:45],
+               'isbn': isbn[:45], 'publish': publisher + '     ' + isbn, 'other': type,
+               'mention': subject[:60] }
+
+    response = self._request(acquire_resource, params)
+    soup = BeautifulSoup(response)
+
+    errormessage = soup.find('span', { 'class': 'errormessage' })
+
+    if errormessage:
+      raise Exception(errormessage.text)
 
 
   def get_contact_info(self):
     """ Gets the patron's current contact information. """
 
+    if not self.logged_in:
+      raise Exception('not logged in')
+
     modpinfo_resources = '/patroninfo/' + self.user_id + '/modpinfo'
 
-    response = self.__request(modpinfo_resources)
+    response = self._request(modpinfo_resources)
     soup = BeautifulSoup(response)
     
     values = ['addr1a', 'addr1b', 'tele1', 'email']

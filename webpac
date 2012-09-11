@@ -63,6 +63,16 @@ def  process_args():
   register_parser.add_argument('EMAIL', help='email address')
   register_parser.add_argument('BIRTHDATE', help='birthdate (MMDDYYYY)')
  
+  acquire_parser = subparsers.add_parser('acquire', help='submit a suggestion for purchase')
+  acquire_parser.add_argument('BARCODE', help='patron\'s barcode')
+  acquire_parser.add_argument('PIN', help='patron\'s PIN')
+  acquire_parser.add_argument('AUTHOR', help='author')
+  acquire_parser.add_argument('TITLE', help='title')
+  acquire_parser.add_argument('PUBLISHER', help='publisher')
+  acquire_parser.add_argument('ISBN', help='issn/isbn')
+  acquire_parser.add_argument('TYPE', help='type [BOOK|AUDIOBOOK|EBOOK|LARGE PRINT|MUSIC|DVD|PERIODICAL|ZINE|DATABASE|OTHER]')
+  acquire_parser.add_argument('SUBJECT', help='subject')
+
   contact_parser = subparsers.add_parser('get_contact_info', help='get patron\'s current contact information')
   contact_parser.add_argument('BARCODE', help='patron\'s barcode')
   contact_parser.add_argument('PIN', help='patron\'s PIN')
@@ -94,6 +104,11 @@ if __name__ == "__main__":
                          args.MAILING_ADDRESS_LINE_1, args.MAILING_ADDRESS_LINE_2,
                          args.STREET_ADDRESS_LINE_1, args.STREET_ADDRESS_LINE_2,
                          args.TELEPHONE, args.EMAIL, args.BIRTHDATE)
+
+    elif args.command == 'acquire':
+      wpsession.login(args.BARCODE, args.PIN)
+      wpsession.acquire(args.AUTHOR, args.TITLE, args.PUBLISHER,
+                        args.ISBN, args.TYPE, args.SUBJECT)
 
     elif args.command == 'get_contact_info':
       wpsession.login(args.BARCODE, args.PIN)

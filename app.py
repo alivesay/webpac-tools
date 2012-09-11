@@ -92,6 +92,31 @@ def register():
                        entity['telephone'], entity['email'], entity['birthdate'])
 
   except Exception as e:
+    return { 'error': str(e) }
+
+
+@route('/acquire', method='PUT')
+def acquire():
+  data = request.body.readline()
+ 
+  if not data:
+    response.status = 400
+    return { 'error': 'no data found' }
+ 
+  entity = json.loads(data)
+  
+  if not set(('code', 'pin', 'author', 'title', 'publisher',
+              'isbn', 'type', 'subject')) <= set(entity):
+    response.status = 400
+    return { 'error': 'missing required keys' }
+
+  try:
+    wbsession = WebPACSession(CATALOG_URL)
+    wbsession.login(entity['code'], entity['pin'])
+    wbsession.acquire(entity['author'], entity['title'], entity['publisher'],
+                      entity['isbn'], entity['type'], entity['subject'])
+
+  except Exception as e:
     if str(e) == 'login failed':
       response.status = 401
     else:
