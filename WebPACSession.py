@@ -197,6 +197,20 @@ class WebPACSession:
     
     return contact_info
 
+  
+  def pin_reset(self, code):
+    """ Requests a PIN reset. """
+
+    pinreset_resources = '/pinreset'
+
+    params = { 'code': code }
+
+    response = self._request(pinreset_resources, params)
+    soup = BeautifulSoup(response)
+
+    if not soup.findAll(text='<h3>Note: Insert temporary message</h3>'):
+      raise Exception('pin reset failed')
+
 
 if __name__ == "__main__":
   wpsession = WebPACSession('https://catalog.example.com', debug=False)

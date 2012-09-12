@@ -77,6 +77,9 @@ def  process_args():
   contact_parser.add_argument('BARCODE', help='patron\'s barcode')
   contact_parser.add_argument('PIN', help='patron\'s PIN')
  
+  pinreset_parser = subparsers.add_parser('pin_reset', help='resets a patron\'s PIN')
+  pinreset_parser.add_argument('BARCODE', help='patron\'s barcode')
+ 
   return base_parser.parse_args()
 
 
@@ -109,6 +112,9 @@ if __name__ == "__main__":
       wpsession.login(args.BARCODE, args.PIN)
       wpsession.acquire(args.AUTHOR, args.TITLE, args.PUBLISHER,
                         args.ISBN, args.TYPE, args.SUBJECT)
+
+    elif args.command == 'pin_reset':
+      wpsession.pin_reset(args.BARCODE)
 
     elif args.command == 'get_contact_info':
       wpsession.login(args.BARCODE, args.PIN)

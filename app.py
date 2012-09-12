@@ -1,4 +1,5 @@
-"""Provides RESTful web service interface to WebPACSession."""
+"
+"Provides RESTful web service interface to WebPACSession."""
 
 __author__ = "Andrew Livesay <andrewl@multco.us>"
 __license__ = "Public Domain"
@@ -142,6 +143,32 @@ def contact_info():
     else:
       response.status = 400
  
+    return { 'error': str(e) }
+
+
+@route('/pin_reset', method='PUT')
+def pin_reset():
+  data = request.body.readline()
+ 
+  if not data:
+    response.status = 400
+    return { 'error': 'no data found' }
+ 
+  entity = json.loads(data)
+  
+  if not 'code' in entity:
+    response.status = 400
+    return { 'error': 'missing required keys' }
+
+  try:
+    wbsession = WebPACSession(CATALOG_URL)
+    wbsession.pin_reset(entity['code'])
+
+  except Exception as e:
+    if str(e) == 'login failed':
+      response.status = 401
+    else:
+      response.status = 400
     return { 'error': str(e) }
 
 
