@@ -1,5 +1,4 @@
-"
-"Provides RESTful web service interface to WebPACSession."""
+"""Provides RESTful web service interface to WebPACSession."""
 
 __author__ = "Andrew Livesay <andrewl@multco.us>"
 __license__ = "Public Domain"
