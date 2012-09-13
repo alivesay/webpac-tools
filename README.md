@@ -46,6 +46,26 @@ optional arguments:
 
 ```
 
+### $ webpac acquire
+```
+usage: webpac acquire [-h]
+                      BARCODE PIN AUTHOR TITLE PUBLISHER ISBN TYPE SUBJECT
+
+positional arguments:
+  BARCODE     patron's barcode
+  PIN         patron's PIN
+  AUTHOR      author
+  TITLE       title
+  PUBLISHER   publisher
+  ISBN        issn/isbn
+  TYPE        type [BOOK|AUDIOBOOK|EBOOK|LARGE
+              PRINT|MUSIC|DVD|PERIODICAL|ZINE|DATABASE|OTHER]
+  SUBJECT     subject
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
 ### $ webpac change_pin
 ```
 $ webpac change_pin --help
@@ -89,6 +109,25 @@ usage: webpac get_contact_info [-h] BARCODE PIN
 positional arguments:
   BARCODE     patron's barcode
   PIN         patron's PIN
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+### $ webpac pin_reset
+```
+usage: webpac pin_reset [-h] BARCODE
+
+positional arguments:
+  BARCODE     patron's barcode
+
+optional arguments:
+  -h, --help  show this help message and exit
+[alivesay@simandala webpac-tools]$ ./webpac pin_reset --help
+usage: webpac pin_reset [-h] BARCODE
+
+positional arguments:
+  BARCODE     patron's barcode
 
 optional arguments:
   -h, --help  show this help message and exit
