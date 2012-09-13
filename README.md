@@ -19,18 +19,22 @@ Other environment variables supported:
 $ webpac --help
 
 usage: webpac [-h] [--server SERVER] [--port PORT] [--no_ssl] [--debug]
-              {change_pin,modify_contact_info,register,get_contact_info} ...
+
+              {change_pin,modify_contact_info,register,acquire,get_contact_info,pin_reset}
+              ...
 
 Provides a CLI wrapper to Millennium WebPAC functions.
 
 positional arguments:
-  {change_pin,modify_contact_info,register,get_contact_info}
+  {change_pin,modify_contact_info,register,acquire,get_contact_info,pin_reset}
                         sub-command help
     change_pin          change patron's PIN
     modify_contact_info
                         modify patron's contact information
     register            register a new patron
+    acquire             submit a suggestion for purchase
     get_contact_info    get patron's current contact information
+    pin_reset           resets a patron's PIN
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -39,6 +43,7 @@ optional arguments:
                         443)
   --no_ssl              disable server connection
   --debug               enable diagnostic output
+
 ```
 
 ### $ webpac change_pin
@@ -184,6 +189,9 @@ CLASSES
      |
      |  new_session(self)
      |      Gets a fresh WebPAC session cookie.
+     |
+     |  pin_reset(self, code)
+     |      Request a PIN reset.
      |
      |  register(self, first_name, middle_name, last_name, mailing_address_line_1,
      |           mailing_address_line_2, street_address_line_1,
