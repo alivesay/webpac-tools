@@ -169,6 +169,14 @@ This [bottle](http://bottlepy.org)-based module presents a web service interface
 
 Edit `app.py` and set `CATALOG_URL` to the URL of your WebPAC server.
 
+* /acquire, method: PUT, params: none, body:
+
+```
+'{"code":"1234567890000", "pin":"1234",
+  "author":"Neal Stephenson", "title": "Snow Crash",
+  "publisher":"Penguin", "isbn":"1234", "type":"Book", "subject":"Science Fiction"}'
+```
+
 * /change_pin, method: PUT, params: none, body:
 
 ```
@@ -180,7 +188,7 @@ Edit `app.py` and set `CATALOG_URL` to the URL of your WebPAC server.
 ```
 '{"code":"1234567890000", "pin":"1234",
   "address_line_1":"1 Main Street", "address_line_2":"Apt. A",
-  "email":"foo@bar.com, "location_code":"aa", "telephone":"000-867-5309" }'
+  "email":"foo@bar.com, "location_code":"aa", "telephone":"000-867-5309"}'
 ```
 
 * /register, method: PUT, params: none, body:
@@ -212,6 +220,9 @@ CLASSES
      |  Methods defined here:
      |
      |  __init__(self, url, debug=False)
+     |
+     |  acquire(self, author, title, publisher, isbn, type, subject)
+     |      Submits a purchase suggestion.
      |
      |  change_pin(self, pin, new_pin)
      |      Changes a patron's PIN.
